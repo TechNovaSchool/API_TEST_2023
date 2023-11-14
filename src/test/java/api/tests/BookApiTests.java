@@ -1,5 +1,7 @@
 package api.tests;
 
+import Util.Config;
+import api.books.ResponseBody;
 import api.books.CreateOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,13 +36,29 @@ public class BookApiTests {
         String requestBody = objectMapper.writeValueAsString(createOrder);
 
         Response response = RestAssured.given()
-                .header("Authorization", "Bearer 78c36186d0c8e201f8708a5e93c74776d7617fa08dd78022d629d45e971c77b6")
+                .header("Authorization", "Bearer " + Config.getProperty("bookApi_Token"))
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .post("https://simple-books-api.glitch.me/orders");
 
         System.out.println(response.statusCode());
         System.out.println(response.asString());
+    }
+
+    @Test
+    public void getSingleOrder() throws JsonProcessingException {
+        Response response = RestAssured.given()
+                .header("Authorization", "Bearer " + Config.getProperty("bookApi_Token"))
+                .get(Config.getProperty("baseURl")+"/orders/5GNprtqbi3zTF6xMQvJAK");
+       System.out.println(response.statusCode());
+
+       ObjectMapper objectMapper = new ObjectMapper();
+
+        ResponseBody rb = objectMapper.readValue(response.asString(), ResponseBody.class);
+
+        System.out.println(rb);
+
+
 
 
     }
