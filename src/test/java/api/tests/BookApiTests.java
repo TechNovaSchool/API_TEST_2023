@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class BookApiTests {
@@ -49,16 +50,17 @@ public class BookApiTests {
     public void getSingleOrder() throws JsonProcessingException {
         Response response = RestAssured.given()
                 .header("Authorization", "Bearer " + Config.getProperty("bookApi_Token"))
-                .get(Config.getProperty("baseURl")+"/orders/5GNprtqbi3zTF6xMQvJAK");
-       System.out.println(response.statusCode());
+                .get(Config.getProperty("baseURl") + "/orders/5GNprtqbi3zTF6xMQvJAK");
+        System.out.println(response.statusCode());
 
-       ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         ResponseBody rb = objectMapper.readValue(response.asString(), ResponseBody.class);
 
-        System.out.println(rb);
+        String str = rb.getCustomerName();
 
-
+        System.out.println(rb.getBookId());
+        Assert.assertEquals(3, rb.getBookId());
 
 
     }

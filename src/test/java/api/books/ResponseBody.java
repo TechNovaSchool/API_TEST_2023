@@ -1,7 +1,9 @@
 package api.books;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class ResponseBody {
 //    {
@@ -14,7 +16,7 @@ public class ResponseBody {
     int bookId;
     String customerName;
     int quantity;
-    String createdBy;
-    long timestamp;
+//    String createdBy;
+//    long timestamp;
 
 }
