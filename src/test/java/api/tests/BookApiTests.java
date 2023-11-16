@@ -1,7 +1,7 @@
 package api.tests;
 
 import Util.Config;
-import api.books.ResponseBody;
+import api.books.ResponseBodyBooks;
 import api.books.CreateOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,7 +55,7 @@ public class BookApiTests {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        ResponseBody rb = objectMapper.readValue(response.asString(), ResponseBody.class);
+        ResponseBodyBooks rb = objectMapper.readValue(response.asString(), ResponseBodyBooks.class);
 
         String str = rb.getCustomerName();
 

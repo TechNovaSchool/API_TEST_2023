@@ -5,7 +5,7 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class ResponseBody {
+public class ResponseBodyBooks {
 //    {
 //        "id": "5GNprtqbi3zTF6xMQvJAK",
 //            "bookId": 3,
