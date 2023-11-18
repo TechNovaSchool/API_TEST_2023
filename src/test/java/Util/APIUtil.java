@@ -12,11 +12,14 @@ public class APIUtil {
     //CRUD
     //GET,POST,PATCH, DELETE
     //hitting a request
+    private static Response response;
+    private static ResponseBody responseBody;
+
 
     public static void callGET(String path, String tableID) {
         String endpoint = Config.getProperty("baseURL_Airtable") + tableID + path;
 
-        Response response = RestAssured.given()
+        response = RestAssured.given()
                 .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
                 .urlEncodingEnabled(false)
                 .get(endpoint);
@@ -26,7 +29,7 @@ public class APIUtil {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            ResponseBody responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
+            responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -47,7 +50,7 @@ public class APIUtil {
         }
 
 
-        Response response = RestAssured.given()
+        response = RestAssured.given()
                 .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
                 .urlEncodingEnabled(false)
                 .contentType(ContentType.JSON)
@@ -57,7 +60,7 @@ public class APIUtil {
         System.out.println(response.statusCode());
 
         try {
-            ResponseBody responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
+            responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -77,7 +80,7 @@ public class APIUtil {
         }
 
 
-        Response response = RestAssured.given()
+        response = RestAssured.given()
                 .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
                 .urlEncodingEnabled(false)
                 .contentType(ContentType.JSON)
@@ -87,7 +90,7 @@ public class APIUtil {
         System.out.println(response.statusCode());
 
         try {
-            ResponseBody responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
+             responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -96,7 +99,7 @@ public class APIUtil {
     public static void callDELETE(String path, String tableID, String recordID){
         String endpoint = Config.getProperty("baseURL_Airtable") + tableID + path;
 
-        Response response = RestAssured.given()
+        response = RestAssured.given()
                 .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
                 .urlEncodingEnabled(false)
                 .queryParam("records[]",recordID)
@@ -107,7 +110,7 @@ public class APIUtil {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            ResponseBody responseBody = objectMapper.readValue(response.asString(),ResponseBody.class);
+             responseBody = objectMapper.readValue(response.asString(),ResponseBody.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
