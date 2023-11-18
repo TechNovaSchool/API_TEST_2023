@@ -13,4 +13,9 @@ public class AirtableUtilTest {
         APIUtil.callGET(path,tableID);
     }
 
+    @Test
+    public void postMethod() {
+
+    }
+
 }
