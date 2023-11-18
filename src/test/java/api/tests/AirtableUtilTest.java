@@ -13,21 +13,12 @@ import java.util.List;
 
 public class AirtableUtilTest {
 
-    public static String recordId;
+    private static String recordId;
+    private static String path;
+    private static String tableID;
+    private Faker faker = new Faker();
 
-    @Test
-    public void getMethod() {
-        String path = "/Table%201";
-        String tableID = Config.getProperty("tableID");
-        APIUtil.callGET(path, tableID);
-    }
-
-    @Test
-    public void postMethod() {
-        Faker faker = new Faker();
-        String path = "/Table%201";
-        String tableID = Config.getProperty("tableID");
-
+    private Record createFakeRecord(){
         Myfields myfields = new Myfields();
         myfields.setFirstName(faker.name().firstName());
         myfields.setLastName(faker.name().lastName());
@@ -38,6 +29,23 @@ public class AirtableUtilTest {
 
         Record record = new Record();
         record.setFields(myfields);
+        return record;
+    }
+
+
+    @Test(priority = 1)
+    public void getMethod() {
+        path = "/Table%201";
+        tableID = Config.getProperty("tableID");
+        APIUtil.callGET(path, tableID);
+    }
+
+    @Test(priority = 2)
+    public void postMethod() {
+        path = "/Table%201";
+        tableID = Config.getProperty("tableID");
+
+        Record record = createFakeRecord();
 
         List<Record> records = new ArrayList<>();
         records.add(record);
@@ -51,18 +59,17 @@ public class AirtableUtilTest {
         System.out.println(recordId);
     }
 
-    @Test
+    @Test(priority = 3)
     public void patchMethod() {
-        Faker faker = new Faker();
-        String path = "/Table%201";
-        String tableID = Config.getProperty("tableID");
+        path = "/Table%201";
+        tableID = Config.getProperty("tableID");
 
         Myfields myfields = new Myfields();
         myfields.setFirstName(faker.name().firstName());
 
         Record record = new Record();
         record.setFields(myfields);
-        record.setId("recs2WKpBCNQusxvy");
+        record.setId(recordId);
 
         List<Record> records = new ArrayList<>();
         records.add(record);
@@ -73,12 +80,11 @@ public class AirtableUtilTest {
         APIUtil.callPATCH(path, tableID, requestBody);
     }
 
-    @Test
+    @Test(priority = 4)
     public void deleteMethod() {
-        String path = "/Table%201";
-        String tableID = Config.getProperty("tableID");
-        String myRecordID = "recqTsPPksO5wGUo4";
-        APIUtil.callDELETE(path, tableID, myRecordID);
+        path = "/Table%201";
+        tableID = Config.getProperty("tableID");
+        APIUtil.callDELETE(path, tableID, recordId);
     }
 
 }
