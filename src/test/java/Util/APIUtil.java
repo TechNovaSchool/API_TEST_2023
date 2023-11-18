@@ -99,8 +99,16 @@ public class APIUtil {
         Response response = RestAssured.given()
                 .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
                 .urlEncodingEnabled(false)
+                .queryParam("records[]",recordID)
+                .delete(endpoint);
 
+        ObjectMapper objectMapper = new ObjectMapper();
 
+        try {
+            ResponseBody responseBody = objectMapper.readValue(response.asString(),ResponseBody.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
