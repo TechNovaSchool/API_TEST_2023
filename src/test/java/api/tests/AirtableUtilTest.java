@@ -13,11 +13,13 @@ import java.util.List;
 
 public class AirtableUtilTest {
 
+    public static String recordId;
+
     @Test
-    public void getMethod(){
+    public void getMethod() {
         String path = "/Table%201";
         String tableID = Config.getProperty("tableID");
-        APIUtil.callGET(path,tableID);
+        APIUtil.callGET(path, tableID);
     }
 
     @Test
@@ -43,7 +45,10 @@ public class AirtableUtilTest {
         RequestBody requestBody = new RequestBody();
         requestBody.setRecords(records);
 
-        APIUtil.callPOST(path,tableID,requestBody);
+        APIUtil.callPOST(path, tableID, requestBody);
+
+        recordId = APIUtil.getResponseBody().getRecords().get(0).getId();
+        System.out.println(recordId);
     }
 
     @Test
@@ -65,7 +70,7 @@ public class AirtableUtilTest {
         RequestBody requestBody = new RequestBody();
         requestBody.setRecords(records);
 
-        APIUtil.callPATCH(path,tableID,requestBody);
+        APIUtil.callPATCH(path, tableID, requestBody);
     }
 
     @Test
@@ -73,7 +78,7 @@ public class AirtableUtilTest {
         String path = "/Table%201";
         String tableID = Config.getProperty("tableID");
         String myRecordID = "recqTsPPksO5wGUo4";
-        APIUtil.callDELETE(path,tableID,myRecordID);
+        APIUtil.callDELETE(path, tableID, myRecordID);
     }
 
 }

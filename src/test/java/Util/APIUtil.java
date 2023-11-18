@@ -14,6 +14,15 @@ public class APIUtil {
     //hitting a request
     private static Response response;
     private static ResponseBody responseBody;
+    private static ObjectMapper objectMapper;
+
+    public static ResponseBody getResponseBody() {
+        return responseBody;
+    }
+
+    public static Response getResponse() {
+        return response;
+    }
 
 
     public static void callGET(String path, String tableID) {
@@ -26,7 +35,7 @@ public class APIUtil {
 
         System.out.println(response.statusCode());
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper();
 
         try {
             responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
@@ -36,11 +45,11 @@ public class APIUtil {
 
     }
 
-    public static void callPOST(String path, String tableID, RequestBody body){
+    public static void callPOST(String path, String tableID, RequestBody body) {
 
         String endpoint = Config.getProperty("baseURL_Airtable") + tableID + path;
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper();
 
         String bodyJSON = "";
         try {
@@ -66,11 +75,11 @@ public class APIUtil {
         }
     }
 
-    public static void callPATCH(String path, String tableID, RequestBody body){
+    public static void callPATCH(String path, String tableID, RequestBody body) {
 
         String endpoint = Config.getProperty("baseURL_Airtable") + tableID + path;
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper();
 
         String bodyJSON = "";
         try {
@@ -90,33 +99,32 @@ public class APIUtil {
         System.out.println(response.statusCode());
 
         try {
-             responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
+            responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void callDELETE(String path, String tableID, String recordID){
+    public static void callDELETE(String path, String tableID, String recordID) {
         String endpoint = Config.getProperty("baseURL_Airtable") + tableID + path;
 
         response = RestAssured.given()
                 .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
                 .urlEncodingEnabled(false)
-                .queryParam("records[]",recordID)
+                .queryParam("records[]", recordID)
                 .delete(endpoint);
 
         System.out.println(response.statusCode());
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper();
 
         try {
-             responseBody = objectMapper.readValue(response.asString(),ResponseBody.class);
+            responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
     }
-
 
 
 }
