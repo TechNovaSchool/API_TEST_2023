@@ -44,9 +44,28 @@ public class AirtableUtilTest {
         requestBody.setRecords(records);
 
         APIUtil.callPOST(path,tableID,requestBody);
+    }
 
+    @Test
+    public void patchMethod() {
+        Faker faker = new Faker();
+        String path = "/Table%201";
+        String tableID = Config.getProperty("tableID");
 
+        Myfields myfields = new Myfields();
+        myfields.setFirstName(faker.name().firstName());
 
+        Record record = new Record();
+        record.setFields(myfields);
+        record.setId("recs2WKpBCNQusxvy");
+
+        List<Record> records = new ArrayList<>();
+        records.add(record);
+
+        RequestBody requestBody = new RequestBody();
+        requestBody.setRecords(records);
+
+        APIUtil.callPATCH(path,tableID,requestBody);
     }
 
 }

@@ -63,4 +63,47 @@ public class APIUtil {
         }
     }
 
+    public static void callPATCH(String path, String tableID, RequestBody body){
+
+        String endpoint = Config.getProperty("baseURL_Airtable") + tableID + path;
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String bodyJSON = "";
+        try {
+            bodyJSON = objectMapper.writeValueAsString(body);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        Response response = RestAssured.given()
+                .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
+                .urlEncodingEnabled(false)
+                .contentType(ContentType.JSON)
+                .body(bodyJSON)
+                .patch(endpoint);
+
+        System.out.println(response.statusCode());
+
+        try {
+            ResponseBody responseBody = objectMapper.readValue(response.asString(), ResponseBody.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void callDELETE(String path, String tableID, String recordID){
+        String endpoint = Config.getProperty("baseURL_Airtable") + tableID + path;
+
+        Response response = RestAssured.given()
+                .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
+                .urlEncodingEnabled(false)
+
+
+
+    }
+
+
+
 }
