@@ -6,6 +6,8 @@ import api.model.Myfields;
 import api.model.Record;
 import api.model.RequestBody;
 import com.github.javafaker.Faker;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class AirtableUtilTest {
 
         recordId = APIUtil.getResponseBody().getRecords().get(0).getId();
         System.out.println(recordId);
+
     }
 
     @Test(priority = 3)
@@ -78,6 +81,7 @@ public class AirtableUtilTest {
         requestBody.setRecords(records);
 
         APIUtil.callPATCH(path, tableID, requestBody);
+
     }
 
     @Test(priority = 4)
@@ -85,6 +89,11 @@ public class AirtableUtilTest {
         path = "/Table%201";
         tableID = Config.getProperty("tableID");
         APIUtil.callDELETE(path, tableID, recordId);
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        Assert.assertEquals(APIUtil.getResponse().statusCode(),200);
     }
 
 }
