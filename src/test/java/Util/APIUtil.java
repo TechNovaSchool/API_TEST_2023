@@ -102,6 +102,8 @@ public class APIUtil {
                 .queryParam("records[]",recordID)
                 .delete(endpoint);
 
+        System.out.println(response.statusCode());
+
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {

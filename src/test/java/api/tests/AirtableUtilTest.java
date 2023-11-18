@@ -68,4 +68,12 @@ public class AirtableUtilTest {
         APIUtil.callPATCH(path,tableID,requestBody);
     }
 
+    @Test
+    public void deleteMethod() {
+        String path = "/Table%201";
+        String tableID = Config.getProperty("tableID");
+        String myRecordID = "recqTsPPksO5wGUo4";
+        APIUtil.callDELETE(path,tableID,myRecordID);
+    }
+
 }
