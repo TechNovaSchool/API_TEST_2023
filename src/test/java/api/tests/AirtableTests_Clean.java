@@ -23,7 +23,7 @@ public class AirtableTests_Clean {
 
 
 @Test(priority = 1)
-    public void a_getRecords() throws JsonProcessingException {
+    public void getRecords() throws JsonProcessingException {
         Response response = RestAssured.given()
                 .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
                 .urlEncodingEnabled(false)
@@ -52,7 +52,7 @@ public class AirtableTests_Clean {
     }
 
     @Test(priority = 2)
-    public void b_postRecord() throws JsonProcessingException {
+    public void postRecord() throws JsonProcessingException {
 
         Myfields newStudent = new Myfields();
         newStudent.setAddress(faker.address().streetAddress());
@@ -88,7 +88,7 @@ public class AirtableTests_Clean {
     }
 
     @Test(priority = 3)
-    public void c_patchRecord() throws JsonProcessingException {
+    public void patchRecord() throws JsonProcessingException {
         Myfields person = new Myfields();
         String randomName = faker.name().firstName();
         person.setFirstName(randomName);
@@ -121,7 +121,7 @@ public class AirtableTests_Clean {
         Assert.assertEquals(str, randomName);
     }
     @Test(priority = 4)
-    public void d_deleteRecord() {
+    public void deleteRecord() {
         String recordId = myRecordId;
         String queryParam = "records[]";
 
