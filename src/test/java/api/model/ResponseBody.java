@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class ResponseBody {
     List<Record> records;
-//    String id;
-//    String createdTime;
-//    Myfields fields;
+    String id;
+    String createdTime;
+    Myfields fields;
 }
