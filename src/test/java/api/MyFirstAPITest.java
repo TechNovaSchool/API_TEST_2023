@@ -1,12 +1,23 @@
 package api;
 
+import api.model.Myfields;
+import api.model.Record;
+import api.model.RequestBody;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.ContentType;
+import util.Config;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 
 public class MyFirstAPITest {
 
@@ -58,6 +69,64 @@ public class MyFirstAPITest {
         System.out.println(response.statusCode());
 
     }
+@Test
+    public void testJsonSchema2() {
 
+    RestAssured.given()
+            .header("Authorization", "Bearer patZypNipTwv7JDmB.0f5ddb3977674abf5d98921f112ef0c0a62f71d8a6bb7071bca110f2c947ed24")
+            .urlEncodingEnabled(false)
+            .get("https://api.airtable.com/v0/app98knPZX5A4I6TC/Table%201/recsHIZ8M9D9UzCKP")
+            .then().assertThat().body(matchesJsonSchemaInClasspath("body.json"));
+    }
+
+
+    @Test
+    public void testJsonSchema() {
+        RestAssured.given()
+                .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
+                .urlEncodingEnabled(false)
+                .get(Config.getProperty("baseURL_Airtable") + Config.getProperty("tableID")+"/Table%201/rec2aUNY6ykbaavoP")
+                .then().assertThat().body(matchesJsonSchemaInClasspath("body.json"));
+    }
+
+    @Test
+    public void testJsonSchemaPost() {
+        Myfields newStudent = new Myfields();
+        newStudent.setAddress("1718 Road");
+        newStudent.setFirstName("Joe");
+        newStudent.setLastName("Biden");
+        newStudent.setEmail("test@gmail.com");
+        newStudent.setAge(80);
+        newStudent.setStudent(true);
+
+        Record record = new Record();
+        record.setFields(newStudent);
+
+        List<Record> myListOfStudents = new ArrayList<>();
+        myListOfStudents.add(record);
+
+        RequestBody requestBody = new RequestBody();
+        requestBody.setRecords(myListOfStudents);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String jsonValue = null;
+        try {
+            jsonValue = objectMapper.writeValueAsString(requestBody);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
+       Response response = RestAssured.given()
+                .header("Authorization", "Bearer " + Config.getProperty("tokenAirtable"))
+                .urlEncodingEnabled(false)
+                .contentType(ContentType.JSON)
+                .body(jsonValue)
+                .post(Config.getProperty("host"));
+        System.out.println(response.statusCode());
+
+       response.then().assertThat().body(matchesJsonSchemaInClasspath("postPayload.json"));
+    }
 
 }

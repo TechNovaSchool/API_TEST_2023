@@ -1,7 +1,7 @@
 package step_def;
 
-import Util.APIUtil;
-import Util.Config;
+import util.APIUtil;
+import util.Config;
 import api.model.Myfields;
 import api.model.Record;
 import api.model.RequestBody;
@@ -77,6 +77,7 @@ public class airtable_steps {
 
 
         APIUtil.callPOST(path, tableID, requestBody);
+        APIUtil.jsonSchemaMatcher("postPayload.json");
 
     }
 
@@ -147,5 +148,6 @@ public class airtable_steps {
         List<Record> recordList = new ArrayList<>();
         recordList.add(record);
         requestBody.setRecords(recordList);
+        System.out.println(requestBody);
     }
 }

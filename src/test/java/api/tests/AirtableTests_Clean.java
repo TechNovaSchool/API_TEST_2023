@@ -1,6 +1,6 @@
 package api.tests;
 
-import Util.Config;
+import util.Config;
 import api.model.Myfields;
 import api.model.Record;
 import api.model.RequestBody;

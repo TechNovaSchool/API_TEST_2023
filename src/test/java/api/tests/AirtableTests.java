@@ -1,13 +1,12 @@
 package api.tests;
 
-import Util.Config;
+import util.Config;
 import api.model.Myfields;
 import api.model.Record;
 import api.model.RequestBody;
 import api.model.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.cucumber.java.bm.Tetapi;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;

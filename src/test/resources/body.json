@@ -1,5 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
   "type": "object",
   "properties": {
     "id": {
@@ -11,9 +12,6 @@
     "fields": {
       "type": "object",
       "properties": {
-        "age": {
-          "type": "integer"
-        },
         "firstName": {
           "type": "string"
         },
@@ -22,13 +20,24 @@
         },
         "email": {
           "type": "string"
+        },
+        "student": {
+          "type": "boolean"
+        },
+        "address": {
+          "type": "string"
+        },
+        "age": {
+          "type": "number"
         }
       },
       "required": [
-        "age",
         "firstName",
         "lastName",
-        "email"
+        "email",
+        "student",
+        "address",
+        "age"
       ]
     }
   },

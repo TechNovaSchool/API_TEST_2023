@@ -1,6 +1,6 @@
 package api.tests;
 
-import Util.Config;
+import util.Config;
 import api.books.ResponseBodyBooks;
 import api.books.CreateOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;

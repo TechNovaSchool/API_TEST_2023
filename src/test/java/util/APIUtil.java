@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 import api.model.RequestBody;
 import api.model.ResponseBody;
@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class APIUtil {
     //CRUD
@@ -126,5 +128,8 @@ public class APIUtil {
 
     }
 
+    public static void jsonSchemaMatcher(String payload){
+      response.then().assertThat().body(matchesJsonSchemaInClasspath(payload));
+    }
 
 }
