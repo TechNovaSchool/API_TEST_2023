@@ -11,7 +11,7 @@ Feature: Airtable API Tests
     Then user will receive status 200
     And user verifies the first name
 
-@crudOp
+  @crudOp
   Scenario: Verify status code for a new record
     When a user calls a POST endpoint for a new record
     Then user will receive status 200
@@ -21,12 +21,22 @@ Feature: Airtable API Tests
     When a user calls a DELETE endpoint to delete the record
     Then user will receive status 200
 
-@negativeScenario
+  @negativeScenario
   Scenario: Create a request with wrong request body
-  When user creates a record with incorrect payload
-  Then user will receive status 422
+    When user creates a record with incorrect payload
+    Then user will receive status 422
 
+  @outline
+  Scenario Outline: Verify POST method with custom variables
+    Given user has "<firstName>" "<lastName>" "<email>" <age>
+    When a user calls a POST endpoint with custom data
+    Then user will receive status 200
 
+    Examples:
+      | firstName | lastName | email        | age |
+      | Joe       | Rogan    | joe@mail.com | 99  |
+      | Andrew    | Test     | Test         | 99  |
+      | Bruce     | Lee      | Test         | 100  |
 
 
 

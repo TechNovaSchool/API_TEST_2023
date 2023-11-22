@@ -17,14 +17,16 @@ public class airtable_steps {
     String path = "";
     String tableID = "";
     String recordID = "";
+    RequestBody requestBody = new RequestBody();
 
     @When("a user calls a GET endpoint")
     public void a_user_calls_a_get_endpoint() {
         path = "/Table%201";
         tableID = Config.getProperty("tableID");
-        APIUtil.callGET(path,tableID);
+        APIUtil.callGET(path, tableID);
 
     }
+
     @Then("user will receive status {string}")
     public void user_will_receive_status(String actualStatus) {
         Assert.assertEquals(actualStatus, "200");
@@ -39,7 +41,7 @@ public class airtable_steps {
     public void user_verifies_the_first_name() {
         String expectedName = "Gavin";
         String actualName = APIUtil.getResponseBody().getFields().getFirstName();
-        Assert.assertEquals(actualName,expectedName);
+        Assert.assertEquals(actualName, expectedName);
 
     }
 
@@ -47,7 +49,7 @@ public class airtable_steps {
     public void a_user_calls_a_get_endpoint_for_a_single_record() {
         path = "/Table%201/recd5sWfWUUx0XJhD";
         tableID = Config.getProperty("tableID");
-        APIUtil.callGET(path,tableID);
+        APIUtil.callGET(path, tableID);
     }
 
     @When("a user calls a POST endpoint for a new record")
@@ -61,7 +63,7 @@ public class airtable_steps {
         newStudent.setFirstName(faker.name().firstName());
         newStudent.setLastName(faker.name().lastName());
         newStudent.setEmail(faker.internet().emailAddress());
-        newStudent.setAge(faker.number().numberBetween(0,100));
+        newStudent.setAge(faker.number().numberBetween(0, 100));
         newStudent.setStudent(true);
 
         Record record = new Record();
@@ -121,9 +123,29 @@ public class airtable_steps {
         RequestBody requestBody = new RequestBody();
 
         APIUtil.callPOST(path, tableID, requestBody);
-
     }
 
+    @When("a user calls a POST endpoint with custom data")
+    public void a_user_calls_a_post_endpoint_with_custom_data() {
+        path = "/Table%201";
+        tableID = Config.getProperty("tableID");
+        APIUtil.callPOST(path, tableID, requestBody);
+    }
 
+    @When("user has {string} {string} {string} {int}")
+    public void user_has(String firstName, String lastName, String email, int age) {
 
+        Myfields myfields = new Myfields();
+        myfields.setFirstName(firstName);
+        myfields.setLastName(lastName);
+        myfields.setEmail(email);
+        myfields.setAge(age);
+
+        Record record = new Record();
+        record.setFields(myfields);
+
+        List<Record> recordList = new ArrayList<>();
+        recordList.add(record);
+        requestBody.setRecords(recordList);
+    }
 }

@@ -13,6 +13,8 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 public class AirtableUtilTest {
 
     private static String recordId;
@@ -60,6 +62,7 @@ public class AirtableUtilTest {
         recordId = APIUtil.getResponseBody().getRecords().get(0).getId();
         System.out.println(recordId);
 
+        APIUtil.getResponse().then().assertThat().body(matchesJsonSchemaInClasspath("test/resources/body.json"));
     }
 
     @Test(priority = 3)
@@ -90,6 +93,13 @@ public class AirtableUtilTest {
         tableID = Config.getProperty("tableID");
         APIUtil.callDELETE(path, tableID, recordId);
     }
+
+
+    @Test
+    public void testJsonSchema() {
+
+    }
+
 
     @AfterMethod
     public void tearDown() {

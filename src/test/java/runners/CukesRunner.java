@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         plugin = {"html:target/cucumber-report.html"},
         features = "src/test/resources",
         glue = "step_def",
-        tags = "@negativeScenario",
+        tags = "@outline",
         dryRun = true
 )
 
