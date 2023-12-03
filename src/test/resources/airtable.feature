@@ -34,9 +34,9 @@ Feature: Airtable API Tests
 
     Examples:
       | firstName | lastName | email        | age |
-      | Joe       | Rogan    | joe@mail.com | 99  |
+      | Tim       | Rogan    | joe@mail.com | 99  |
       | Andrew    | Test     | Test         | 99  |
-      | Bruce     | Lee      | Test         | 100  |
+      | Bruce     | Lee      | Test         | 99  |
 
 
 
@@ -59,3 +59,12 @@ Feature: Airtable API Tests
 #- Implement the above scenario using Java and Rest Assured.
 #- Write Cucumber feature files with appropriate Gherkin syntax for each step.
 #- Ensure your tests handle response validation
+
+#
+
+  Task
+#Feature: API response validation
+#  Scenario: Validate response from API
+    When I request data from the GET API
+    Then the response status should be 200
+    And the response should match the expected schema

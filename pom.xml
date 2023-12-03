@@ -8,6 +8,11 @@
     <artifactId>AirtableRestAutomationTests</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <build>
+        <finalName>docker-integration</finalName>
+    </build>
+
+
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>

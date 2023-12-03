@@ -24,7 +24,6 @@ public class airtable_steps {
         path = "/Table%201";
         tableID = Config.getProperty("tableID");
         APIUtil.callGET(path, tableID);
-
     }
 
     @Then("user will receive status {string}")
@@ -149,5 +148,7 @@ public class airtable_steps {
         recordList.add(record);
         requestBody.setRecords(recordList);
         System.out.println(requestBody);
+        String locator = " //*[.='" + lastName + "']";
+
     }
 }
